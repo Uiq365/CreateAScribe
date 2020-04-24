@@ -1,0 +1,2 @@
+rootProject.name='Create-A-Scribe'
+include ':app'
