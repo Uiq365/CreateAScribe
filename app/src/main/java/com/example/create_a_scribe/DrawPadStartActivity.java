@@ -1,11 +1,16 @@
 package com.example.create_a_scribe;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -22,6 +27,9 @@ import view.DrawView;
 public class DrawPadStartActivity extends AppCompatActivity {
     private DrawView drawView;
     private AlertDialog.Builder currAlertDialog;
+    private ImageView widthImageView;
+    private AlertDialog dialogLineWidth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,18 +87,53 @@ public class DrawPadStartActivity extends AppCompatActivity {
     void showLineWidthDialog(){
         currAlertDialog = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.width_dialog, null);
-        SeekBar widthSeekBar= view.findViewById(R.id.widthDSeekBar);
+        final SeekBar widthSeekBar= view.findViewById(R.id.widthDSeekBar);
         Button setLineWidthButton = view.findViewById(R.id.widthDialogButton);
+        widthImageView = view.findViewById(R.id.imageViewid);
+
         setLineWidthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_LONG).show();
+                drawView.setLineWidth(widthSeekBar.getProgress());
+                dialogLineWidth.dismiss();
+                currAlertDialog = null;
             }
         });
 
+        widthSeekBar.setOnSeekBarChangeListener(widthSeekBarChange);
+
         currAlertDialog.setView(view);
-        currAlertDialog.create();
-        currAlertDialog.show();
+        dialogLineWidth =  currAlertDialog.create();
+        dialogLineWidth.setTitle("Set Line Width");
+        dialogLineWidth.show();
     }
+
+    private  SeekBar.OnSeekBarChangeListener widthSeekBarChange = new SeekBar.OnSeekBarChangeListener() {
+        Bitmap bitmap = Bitmap.createBitmap(400, 100, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Paint p = new Paint();
+            p.setColor(drawView.getDrawingColor());
+            p.setStrokeCap(Paint.Cap.ROUND);
+            p.setStrokeWidth(progress);
+
+            bitmap.eraseColor(Color.WHITE);
+            canvas.drawLine(30, 50, 370, 50, p);
+            widthImageView.setImageBitmap(bitmap);
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
 }
