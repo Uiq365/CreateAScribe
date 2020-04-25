@@ -7,15 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +14,22 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import com.example.create_a_scribe.adapters.NotesAdapter;
-import com.example.create_a_scribe.callbacks.MainActionModeCallback;
-import com.example.create_a_scribe.callbacks.NoteEventListener;
-import com.example.create_a_scribe.db.NotesDB;
-import com.example.create_a_scribe.db.NotesDao;
-import com.example.create_a_scribe.model.Note;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.create_a_scribe.adapters.LyricsAdapter;
+import com.example.create_a_scribe.callbacks.LyricEventListener;
+import com.example.create_a_scribe.callbacks.MainLyricActionModeCallback;
+import com.example.create_a_scribe.db.LyricsDB;
+import com.example.create_a_scribe.db.LyricsDao;
+import com.example.create_a_scribe.model.Lyric;
 import com.example.create_a_scribe.utils.NoteUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -43,19 +43,19 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.create_a_scribe.EditNoteActivity.NOTE_EXTRA_Key;
+import static com.example.create_a_scribe.EditLyricActivity.LYRIC_EXTRA_Key;
 
-// This class is the first activity run by the application
+// This class is the main activity that makes the lyricPad work
 // This is used as a hub holding the navigation menu which contain buttons that point to the other activities.
-// The NotePad code is also housed here. The loading, creating, and deleting functionality is below
-// as well as the click functionality and what occurs when you hold your finger on the notes
-public class MainActivity extends AppCompatActivity implements NoteEventListener, Drawer.OnDrawerItemClickListener {
-    private static final String TAG = "MainActivity";
+// The LyricPad code is also housed here. The loading, creating, and deleting functionality is below
+// as well as the click functionality and what occurs when you hold your finger on the lyrics
+public class LyricPadActivity extends AppCompatActivity implements LyricEventListener, Drawer.OnDrawerItemClickListener {
+    private static final String TAG = "LyricPadActivity";
     private RecyclerView recyclerView;
-    private ArrayList<Note> notes;
-    private NotesAdapter adapter;
-    private NotesDao dao;
-    private MainActionModeCallback actionModeCallback;
+    private ArrayList<Lyric> lyrics;
+    private LyricsAdapter adapter;
+    private LyricsDao dao;
+    private MainLyricActionModeCallback actionModeCallback;
     private int checkedCount = 0;
     private FloatingActionButton fab;
     private SharedPreferences settings;
@@ -70,13 +70,13 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
         theme = settings.getInt(THEME_Key, R.style.AppTheme);
         setTheme(theme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);//sets the layout to the view
+        setContentView(R.layout.activity_lyric_pad);//sets the layout to the view
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setupNavigation(savedInstanceState, toolbar);
         // init recyclerView
-        recyclerView = findViewById(R.id.notes_list);
+        recyclerView = findViewById(R.id.lyrics_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // init fab Button
@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
             @Override
             public void onClick(View view) {
                 // TODO: 13/05/2018  add new note
-                onAddNewNote();
+                onAddNewLyric();
             }
         });
 
-        dao = NotesDB.getInstance(this).notesDao();
+        dao = LyricsDB.getInstance(this).lyricsDao();
     }
 
     private void setupNavigation(Bundle savedInstanceState, Toolbar toolbar) {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 if(position == 2)
                 {
-                    Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                    Intent intent=new Intent(LyricPadActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 return false;
@@ -122,18 +122,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 if(position == 3)
                 {
-                    Intent intent=new Intent(MainActivity.this,DrawPadActivity.class);
-                    startActivity(intent);
-                }
-                return false;
-            }
-        });
-        drawerLyrics.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                if(position == 4)
-                {
-                    Intent intent=new Intent(MainActivity.this,LyricPadActivity.class);
+                    Intent intent=new Intent(LyricPadActivity.this,DrawPadActivity.class);
                     startActivity(intent);
                 }
                 return false;
@@ -159,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
                         }
 
                         // this lines means we want to close the app and open it again to change theme
-                        TaskStackBuilder.create(MainActivity.this)
-                                .addNextIntent(new Intent(MainActivity.this, MainActivity.class))
+                        TaskStackBuilder.create(LyricPadActivity.this)
+                                .addNextIntent(new Intent(LyricPadActivity.this, LyricPadActivity.class))
                                 .addNextIntent(getIntent()).startActivities();
                     }
                 });
@@ -200,11 +189,11 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
 
     }
 
-    private void loadNotes() {
-        this.notes = new ArrayList<>();
-        List<Note> list = dao.getNotes();// get All notes from DataBase
-        this.notes.addAll(list);// adds all the notes to a list
-        this.adapter = new NotesAdapter(this, this.notes);//sends a copy of the current notes to the adapter.
+    private void loadLyrics() {
+        this.lyrics = new ArrayList<>();
+        List<Lyric> list = dao.getLyrics();// get All lyrics from DataBase
+        this.lyrics.addAll(list);// adds all the lyrics to a list
+        this.adapter = new LyricsAdapter(this, this.lyrics);//sends a copy of the current lyrics to the adapter.
         // set listener to adapter
         this.adapter.setListener(this);
         this.recyclerView.setAdapter(adapter);
@@ -215,24 +204,24 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
     }
 
     /**
-     * when no notes show msg in main_layout
+     * when no lyrics show msg in main_layout
      */
     private void showEmptyView() {
-        if (notes.size() == 0) {
+        if (lyrics.size() == 0) {
             this.recyclerView.setVisibility(View.GONE);
-            findViewById(R.id.empty_notes_view).setVisibility(View.VISIBLE);
+            findViewById(R.id.empty_lyrics_view).setVisibility(View.VISIBLE);
 
         } else {
             this.recyclerView.setVisibility(View.VISIBLE);
-            findViewById(R.id.empty_notes_view).setVisibility(View.GONE);
+            findViewById(R.id.empty_lyrics_view).setVisibility(View.GONE);
         }
     }
 
     /**
      * Start EditNoteActivity.class for Create New Note
      */
-    private void onAddNewNote() {
-        startActivity(new Intent(this, EditNoteActivity.class));
+    private void onAddNewLyric() {
+        startActivity(new Intent(this, EditLyricActivity.class));
 
     }
 
@@ -255,11 +244,11 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
             return true;
         }
         else if (id == R.id.action_signIn) {
-            Intent intent=new Intent(MainActivity.this,SignInActivity.class);
+            Intent intent=new Intent(LyricPadActivity.this,SignInActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.action_signOut) {
-            Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
+            Intent intent=new Intent(LyricPadActivity.this,ProfileActivity.class);
             startActivity(intent);
         }
 
@@ -268,35 +257,35 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
 
 
     @Override
-    //when clicking an old note, it loads the current notes
+    //when clicking an old note, it loads the current lyrics
     protected void onResume() {
         super.onResume();
-        loadNotes();
+        loadLyrics();
     }
 
     @Override
     //when an old note was clicked, it sends you to the EditNoteActivity so you can then edit the note
-    public void onNoteClick(Note note) {
-        // TODO: 22/07/2018  note clicked : edit note
-        Intent edit = new Intent(this, EditNoteActivity.class);
-        edit.putExtra(NOTE_EXTRA_Key, note.getId());
+    public void onLyricClick(Lyric lyric) {
+        // TODO: 22/07/2018  lyric clicked : edit lyric
+        Intent edit = new Intent(this, EditLyricActivity.class);
+        edit.putExtra(LYRIC_EXTRA_Key, lyric.getId());
         startActivity(edit);
 
     }
 
     @Override
-    public void onNoteLongClick(Note note) {
-        // TODO: 22/07/2018 note long clicked : delete , share ..
-        note.setChecked(true);
+    public void onLyricLongClick(Lyric lyric) {
+        // TODO: 22/07/2018 lyric long clicked : delete , share ..
+        lyric.setChecked(true);
         checkedCount = 1;
         adapter.setMultiCheckMode(true);
 
         // set new listener to adapter intend off MainActivity listener that we have implement
-        adapter.setListener(new NoteEventListener() {
+        adapter.setListener(new LyricEventListener() {
             @Override
-            public void onNoteClick(Note note) {
-                note.setChecked(!note.isChecked()); // inverse selected
-                if (note.isChecked())
+            public void onLyricClick(Lyric lyric) {
+                lyric.setChecked(!lyric.isChecked()); // inverse selected
+                if (lyric.isChecked())
                     checkedCount++;
                 else checkedCount--;
 
@@ -309,23 +298,23 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
                     actionModeCallback.getAction().finish();
                 }
 
-                actionModeCallback.setCount(checkedCount + "/" + notes.size());
+                actionModeCallback.setCount(checkedCount + "/" + lyrics.size());
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onNoteLongClick(Note note) {
+            public void onLyricLongClick(Lyric lyric) {
 
             }
         });
 
-        actionModeCallback = new MainActionModeCallback() {
+        actionModeCallback = new MainLyricActionModeCallback() {
             @Override
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.action_delete_notes)
-                    onDeleteMultiNotes();
-                else if (menuItem.getItemId() == R.id.action_share_note)
-                    onShareNote();
+                if (menuItem.getItemId() == R.id.action_delete_lyrics)
+                    onDeleteMultiLyrics();
+                else if (menuItem.getItemId() == R.id.action_share_lyric)
+                    onShareLyric();
 
                 actionMode.finish();
                 return false;
@@ -337,37 +326,37 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
         startActionMode(actionModeCallback);
         // hide fab button
         fab.setVisibility(View.GONE);
-        actionModeCallback.setCount(checkedCount + "/" + notes.size());
+        actionModeCallback.setCount(checkedCount + "/" + lyrics.size());
     }
 
-    private void onShareNote() {
-        // TODO: 22/07/2018  we need share just one Note not multi
+    private void onShareLyric() {
+        // TODO: 22/07/2018  we need share just one Lyric not multiple
 
-        Note note = adapter.getCheckedNotes().get(0);
-        // TODO: 22/07/2018 do your logic here to share note ; on social or something else
+        Lyric lyric = adapter.getCheckedLyrics().get(0);
+        // TODO: 22/07/2018 do your logic here to share lyric on social or something else
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
-        String noteText = note.getNoteText() + "\n\n Create on : " +
-                NoteUtils.dateFromLong(note.getNoteDate()) + "\n  By :" +
+        String songText = lyric.getLyricTitle() + "\n by: "+ lyric.getLyricAuthor() + " \n" + lyric.getLyricContent() +
+                "\n\n Created on : " + NoteUtils.dateFromLong(lyric.getLyricDate()) + "\n  With :" +
                 getString(R.string.app_name);
-        share.putExtra(Intent.EXTRA_TEXT, noteText);
+        share.putExtra(Intent.EXTRA_TEXT, songText);
         startActivity(share);
 
 
     }
 
-    private void onDeleteMultiNotes() {
-        // TODO: 22/07/2018 delete multi notes
+    private void onDeleteMultiLyrics() {
+        // TODO: 22/07/2018 delete multi lyrics
 
-        List<Note> checkedNotes = adapter.getCheckedNotes();
-        if (checkedNotes.size() != 0) {
-            for (Note note : checkedNotes) {
-                dao.deleteNote(note);
+        List<Lyric> checkedLyrics = adapter.getCheckedLyrics();
+        if (checkedLyrics.size() != 0) {
+            for (Lyric lyric : checkedLyrics) {
+                dao.deleteLyric(lyric);
             }
-            // refresh Notes
-            loadNotes();
-            Toast.makeText(this, checkedNotes.size() + " Note(s) Delete successfully !", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(this, "No Note(s) selected", Toast.LENGTH_SHORT).show();
+            // refresh Lyrics
+            loadLyrics();
+            Toast.makeText(this, checkedLyrics.size() + " Lyric(s) Delete successfully !", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(this, "No Lyric(s) selected", Toast.LENGTH_SHORT).show();
 
         //adapter.setMultiCheckMode(false);
     }
@@ -376,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
     public void onActionModeFinished(ActionMode mode) {
         super.onActionModeFinished(mode);
 
-        adapter.setMultiCheckMode(false); // uncheck the notes
+        adapter.setMultiCheckMode(false); // uncheck the lyrics
         adapter.setListener(this); // set back the old listener
         fab.setVisibility(View.VISIBLE);
     }
@@ -393,11 +382,11 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                     // TODO: 28/09/2018 delete note when swipe
 
-                    if (notes != null) {
-                        // get swiped note
-                        Note swipedNote = notes.get(viewHolder.getAdapterPosition());
-                        if (swipedNote != null) {
-                            swipeToDelete(swipedNote, viewHolder);
+                    if (lyrics != null) {
+                        // get swiped lyric
+                        Lyric swipedLyric = lyrics.get(viewHolder.getAdapterPosition());
+                        if (swipedLyric != null) {
+                            swipeToDelete(swipedLyric, viewHolder);
 
                         }
 
@@ -405,15 +394,15 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
                 }
             });
 
-    private void swipeToDelete(final Note swipedNote, final RecyclerView.ViewHolder viewHolder) {
-        new AlertDialog.Builder(MainActivity.this)
+    private void swipeToDelete(final Lyric swipedLyric, final RecyclerView.ViewHolder viewHolder) {
+        new AlertDialog.Builder(LyricPadActivity.this)
                 .setMessage("Delete Note?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // TODO: 28/09/2018 delete note
-                        dao.deleteNote(swipedNote);
-                        notes.remove(swipedNote);
+                        dao.deleteLyric(swipedLyric);
+                        lyrics.remove(swipedLyric);
                         adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                         showEmptyView();
 

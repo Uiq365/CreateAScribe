@@ -16,9 +16,10 @@
         <activity android:name=".DrawPadActivity"></activity>
         <activity android:name=".DrawPadStartActivity"></activity>
         <activity android:name=".EditNoteActivity" />
+        <activity android:name=".EditLyricActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".LyricActivity" />
+        <activity android:name=".LyricPadActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

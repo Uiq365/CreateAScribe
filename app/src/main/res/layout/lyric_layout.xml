@@ -3,30 +3,31 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/lyric_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:visibility="gone"/>
+        android:visibility="gone" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp">
+
         <TextView
-            android:id="@+id/note_text"
+            android:id="@+id/lyric_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:layout_marginBottom="3dp"
             android:textSize="18sp"
-            android:maxLines="3"
-            />
+            android:maxLines="3" />
 
         <TextView
-            android:id="@+id/note_date"
+            android:id="@+id/lyric_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"

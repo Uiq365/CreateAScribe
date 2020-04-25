@@ -28,4 +28,6 @@
     <string name="label_blue">Blue</string>
     <string name="set_color">Set Color</string>
     <string name="draw_pad_text">DrawPad</string>
+    <string name="no_lyric_text">No Content</string>
+    <string name="spitsomething">Sing ya Soul Song</string>
 </resources>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.create_a_scribe.EditLyricActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_lyric_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/lyric_title"
+        android:layout_width="410dp"
+        android:layout_height="38dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="8dp"
+
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/spitsomething"
+        android:inputType="textShortMessage"
+        android:paddingStart="12dp"
+
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:singleLine="false"
+        app:layout_constraintBottom_toTopOf="@+id/lyric_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_lyric_activity_toolbar"
+        tools:text="@tools:sample/lorem/random" />
+
+    <EditText
+        android:id="@+id/lyric_author"
+        android:layout_width="330dp"
+        android:layout_height="36dp"
+        android:layout_gravity="clip_vertical"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/spitsomething"
+        android:inputType="textShortMessage"
+        android:paddingStart="12dp"
+
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyric_title"
+        tools:text="@tools:sample/lorem/random" />
+
+    <EditText
+        android:id="@+id/lyric_content"
+        android:layout_width="411dp"
+        android:layout_height="456dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="119dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/spitsomething"
+
+        android:inputType="textMultiLine"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyric_author"
+        tools:text="@tools:sample/lorem/random" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--<RelativeLayout-->
+
+<!--        <TableLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--        </TableRow>-->
+
+<!--    </TableLayout>-->
+<!--</RelativeLayout>-->

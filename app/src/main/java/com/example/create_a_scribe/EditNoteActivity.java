@@ -63,7 +63,7 @@ public class EditNoteActivity extends AppCompatActivity {
         String text = inputNote.getText().toString();
         if (!text.isEmpty()) {
             long date = new Date().getTime(); // get  system time
-            // if  exist update els crete new
+            // if  exist update else create new
             if (temp == null) {
                 temp = new Note(text, date);
                 dao.insertNote(temp); // create new note and inserted to database
