@@ -1,5 +1,6 @@
 package view;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,13 +8,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.media.Image;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 public class DrawView extends View {
@@ -128,7 +137,7 @@ public class DrawView extends View {
     public void setLineWidth(int w){
         paintLine.setStrokeWidth(w);
     }
-    int getLineWidth(){
+    public int getLineWidth(){
         return (int) paintLine.getStrokeWidth();
     }
 
@@ -137,6 +146,10 @@ public class DrawView extends View {
         previousPointMap.clear();
         bitmap.eraseColor(Color.WHITE);
         invalidate(); // refreshes the screen
+    }
+
+    public void setErase(){
+        setDrawingColor(Color.WHITE);
     }
 
     private void touchEnded(int pointerId) {
@@ -163,5 +176,48 @@ public class DrawView extends View {
         path.moveTo(x,y);
         point.x = (int) x;
         point.y = (int) y;
+    }
+
+    public void saveImage(){
+        String filename = "CreatiPad" + System.currentTimeMillis();// used to save the file name as something uniquue everytime by using the current millisecondss
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, filename);
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+
+        // get URI for the location to save the file
+        Uri uri = getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        try {
+            OutputStream outputStream =
+                    getContext().getContentResolver().openOutputStream(uri);
+
+            //copy the bitmap to the output stream
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);// this is our image
+
+            outputStream.flush();
+            outputStream.close();
+
+            Toast message = Toast.makeText(getContext(), "Image Saved", Toast.LENGTH_LONG);
+            message.setGravity(Gravity.CENTER, message.getXOffset() /2,
+                    message.getYOffset() / 2);
+            message.show();
+
+
+        } catch (FileNotFoundException e) {
+
+            Toast message = Toast.makeText(getContext(), "Image Not Saved", Toast.LENGTH_LONG);
+            message.setGravity(Gravity.CENTER, message.getXOffset() /2,
+                    message.getYOffset() / 2);
+            message.show();
+
+        } catch (IOException e) {
+
+            Toast message = Toast.makeText(getContext(), "Image Not Saved", Toast.LENGTH_LONG);
+            message.setGravity(Gravity.CENTER, message.getXOffset() /2,
+                    message.getYOffset() / 2);
+            message.show();
+        }
     }
 }

@@ -6,7 +6,7 @@
     <string name="whats_on_your_mind">Whats on your mind</string>
     <string name="share_note">Share Note</string>
     <string name="delete_notes">Delete Notes</string>
-    <string name="draw_something">Draw Something</string>
+    <string name="draw_something">Art washes away from the soul the dust of everyday life.</string>
     <string name="no_notes">No Notes !</string>
     <string name="start_new">New</string>
     <string name="brush">Brush</string>
@@ -22,4 +22,10 @@
     <string name="clear">Clear</string>
     <string name="back">Back</string>
     <string name="set_width">Set Width</string>
+    <string name="label_alpha">Alpha</string>
+    <string name="label_red">Red</string>
+    <string name="label_green">Green</string>
+    <string name="label_blue">Blue</string>
+    <string name="set_color">Set Color</string>
+    <string name="draw_pad_text">DrawPad</string>
 </resources>

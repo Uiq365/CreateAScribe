@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
 
         iDrawerItems.add(new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home_black_24dp));
         iDrawerItems.add(drawerNotes.withName("NotePad").withIcon(R.drawable.ic_note_black_24dp));
-        iDrawerItems.add(drawerArt.withName("ArtPad").withIcon(R.drawable.baseline_brush_black_24));
+        iDrawerItems.add(drawerArt.withName("DrawPad").withIcon(R.drawable.baseline_brush_black_24));
         iDrawerItems.add(drawerLyrics.withName("LyricPad").withIcon(R.drawable.baseline_music_note_black_24));
         drawerNotes.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override

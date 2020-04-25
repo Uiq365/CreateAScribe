@@ -29,6 +29,16 @@ public class DrawPadStartActivity extends AppCompatActivity {
     private AlertDialog.Builder currAlertDialog;
     private ImageView widthImageView;
     private AlertDialog dialogLineWidth;
+    private AlertDialog colorDialog;
+
+    //SeekBar objects used to hold the seekBar data from user input
+    private SeekBar alphaSeekBar;
+    private SeekBar redSeekBar;
+    private SeekBar greenSeekBar;
+    private SeekBar blueSeekBar;
+
+    //view holding the color seekBars
+    private View colorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +68,18 @@ public class DrawPadStartActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.clearid: {
+                drawView.clear();
                 break;
             }
             case R.id.saveid: {
-                drawView.clear();
+                drawView.saveImage();
             }
             case R.id.eraseid: {
+                drawView.setErase();
                 break;
             }
             case R.id.colorid: {
+                showColorDialog();
                 break;
             }
             case R.id.linewidth: {
@@ -79,6 +92,53 @@ public class DrawPadStartActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    void showColorDialog(){
+        currAlertDialog = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.color_dialog, null);
+        alphaSeekBar = view.findViewById(R.id.alphaSeekBar);
+        redSeekBar = view.findViewById(R.id.redSeekBar);
+        greenSeekBar = view.findViewById(R.id.greenSeekBar);
+        blueSeekBar = view.findViewById(R.id.blueSeekBar);
+        colorView = view.findViewById(R.id.colorView);
+
+        //register SeekBar event listeners
+        alphaSeekBar.setOnSeekBarChangeListener(colorSeekBarChanged);
+        redSeekBar.setOnSeekBarChangeListener(colorSeekBarChanged);
+        greenSeekBar.setOnSeekBarChangeListener(colorSeekBarChanged);
+        blueSeekBar.setOnSeekBarChangeListener(colorSeekBarChanged);
+
+        int color = drawView.getDrawingColor();
+        alphaSeekBar.setProgress(Color.alpha(color));
+        redSeekBar.setProgress(Color.red(color));
+        greenSeekBar.setProgress(Color.green(color));
+        blueSeekBar.setProgress(Color.blue(color));
+
+        Button setButtonColor = view.findViewById(R.id.setColorButton);
+        setButtonColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawView.setDrawingColor(Color.argb(
+                        alphaSeekBar.getProgress(),
+                        redSeekBar.getProgress(),
+                        greenSeekBar.getProgress(),
+                        blueSeekBar.getProgress()
+                ));
+
+                colorDialog.dismiss();
+            }
+        });
+        currAlertDialog.setView(view);
+        currAlertDialog.setTitle("Color Picker");
+        colorDialog = currAlertDialog.create();
+        colorDialog.show();
+
+    }
+
+
+
 
 
     // helper function that creates a view, the dialog that allows you to alter the stroke width of the paint line,
@@ -101,12 +161,45 @@ public class DrawPadStartActivity extends AppCompatActivity {
         });
 
         widthSeekBar.setOnSeekBarChangeListener(widthSeekBarChange);
+        widthSeekBar.setProgress(drawView.getLineWidth());
 
         currAlertDialog.setView(view);
         dialogLineWidth =  currAlertDialog.create();
         dialogLineWidth.setTitle("Set Line Width");
         dialogLineWidth.show();
     }
+
+    private SeekBar.OnSeekBarChangeListener colorSeekBarChanged = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            //changing the background color to the user chosen color
+            drawView.setBackgroundColor(Color.argb(
+                    alphaSeekBar.getProgress(),
+                    redSeekBar.getProgress(),
+                    greenSeekBar.getProgress(),
+                    blueSeekBar.getProgress()
+            ));
+
+            //display current color
+            colorView.setBackgroundColor(Color.argb(
+                    alphaSeekBar.getProgress(),
+                    redSeekBar.getProgress(),
+                    greenSeekBar.getProgress(),
+                    blueSeekBar.getProgress()
+            ));
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
     private  SeekBar.OnSeekBarChangeListener widthSeekBarChange = new SeekBar.OnSeekBarChangeListener() {
         Bitmap bitmap = Bitmap.createBitmap(400, 100, Bitmap.Config.ARGB_8888);
