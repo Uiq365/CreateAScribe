@@ -119,6 +119,19 @@ public class DrawView extends View {
         }
     }
 
+    public void setDrawingColor(int color){//this method is used to change the paint color. It brings up a dialog which allows the user to pick the color
+            paintLine.setColor(color);
+    }
+    public int getDrawingColor(){
+        return paintLine.getColor();
+    }
+    public void setLineWidth(int w){
+        paintLine.setStrokeWidth(w);
+    }
+    int getLineWidth(){
+        return (int) paintLine.getStrokeWidth();
+    }
+
     public void clear(){
         pathMap.clear(); //removes all of the paths
         previousPointMap.clear();

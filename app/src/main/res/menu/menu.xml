@@ -7,6 +7,10 @@
         android:title="@string/Color"
         app:showAsAction="always" />
     <item
+        android:id="@+id/clearid"
+        android:icon="@drawable/baseline_clear_black_24"
+        android:title="@string/clear" />
+    <item
         android:id="@+id/saveid"
         android:icon="@drawable/save"
         android:title="@string/Save" />
@@ -20,8 +24,4 @@
         android:icon="@drawable/eraser"
         android:title="@string/erase"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/clearid"
-        android:icon="@drawable/baseline_clear_black_24"
-        android:title="@string/clear" />
 </menu>

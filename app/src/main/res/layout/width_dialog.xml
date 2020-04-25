@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@android:color/darker_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewid"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/baseline_format_line_spacing_black_24" />
+
+    <SeekBar
+        android:id="@+id/widthDSeekBar"
+        android:layout_width="match_parent"
+        android:padding="14dp"
+        android:layout_height="wrap_content"
+        android:max="50" />
+
+    <Button
+        android:id="@+id/widthDialogButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_width" />
+</LinearLayout>
