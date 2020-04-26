@@ -29,18 +29,20 @@
         android:layout_width="410dp"
         android:layout_height="38dp"
         android:layout_gravity="bottom"
-        android:layout_marginTop="8dp"
 
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="@string/spitsomething"
-        android:inputType="textShortMessage"
-        android:paddingStart="12dp"
 
+        android:hint="@string/whatsThisCalled"
+        android:inputType="textShortMessage"
+        android:padding="5dp"
+        android:paddingStart="12dp"
         android:paddingTop="4dp"
         android:paddingEnd="12dp"
         android:singleLine="false"
-        app:layout_constraintBottom_toTopOf="@+id/lyric_author"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_lyric_activity_toolbar"
@@ -51,60 +53,134 @@
         android:layout_width="330dp"
         android:layout_height="36dp"
         android:layout_gravity="clip_vertical"
-        android:layout_marginStart="41dp"
-        android:layout_marginLeft="41dp"
-        android:layout_marginEnd="41dp"
-        android:layout_marginRight="41dp"
+        android:layout_marginStart="40dp"
+
+        android:layout_marginLeft="40dp"
         android:ems="10"
         android:gravity="center"
-
-        android:hint="@string/spitsomething"
+        android:hint="@string/whoAreYou"
         android:inputType="textShortMessage"
         android:paddingStart="12dp"
         android:paddingTop="4dp"
         android:paddingEnd="12dp"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/lyric_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lyric_title"
         tools:text="@tools:sample/lorem/random" />
 
     <EditText
         android:id="@+id/lyric_content"
-        android:layout_width="410dp"
-        android:layout_height="456dp"
+        android:layout_width="411dp"
+        android:layout_height="418dp"
         android:layout_gravity="top"
-        android:layout_marginBottom="137dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="center"
-
-        android:hint="@string/spitsomething"
+        android:hint="@string/spitSomething"
         android:inputType="textMultiLine"
         android:paddingStart="12dp"
         android:paddingTop="4dp"
         android:paddingEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lyric_author"
         tools:text="@tools:sample/lorem/random" />
 
-    <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="134dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="407dp"
+        android:layout_height="149dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/lyric_content">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/textCurrentTime"
+            android:layout_width="46dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="44dp"
+            android:gravity="right"
+            android:text="@string/zero"
+            android:textColor="#212121"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+        <SeekBar
+            android:id="@+id/playerSeekBar"
+            android:layout_width="270dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textTotalDuration" />
+
+        <TextView
+            android:id="@+id/textTotalDuration"
+            android:layout_width="46dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="348dp"
+            android:layout_marginLeft="348dp"
+            android:layout_marginBottom="48dp"
+            android:text="@string/zero"
+            android:textColor="#212121"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/pathView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="304dp"
+            android:layout_marginRight="304dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="410dp"
+            android:layout_height="148dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imagePlayPause"
+                android:layout_width="57dp"
+                android:layout_height="48dp"
+                android:layout_margin="50dp"
+                android:layout_marginStart="304dp"
+                android:layout_marginLeft="304dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="177dp"
+                android:layout_marginRight="177dp"
+                android:layout_marginBottom="36dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_play"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.060000002" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,8 @@
         android:id="@+id/save_lyric"
         android:title="SAVE"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/pickMusicFile"
+        android:title="@string/pickMusicFile"
+        app:showAsAction="ifRoom" />
 </menu>

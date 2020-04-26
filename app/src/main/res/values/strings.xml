@@ -29,7 +29,11 @@
     <string name="set_color">Set Color</string>
     <string name="draw_pad_text">DrawPad</string>
     <string name="no_lyric_text">No Content</string>
-    <string name="spitsomething">Sing ya Soul Song</string>
+    <string name="whatsThisCalled">Whats the Song Called?</string>
+    <string name="spitSomething">Let ya Soul Sing</string>
+    <string name="whoAreYou">Who Are You</string>
     <string name="Reset">Reset Color</string>
     <string name="voice_record">Save A FreeStyle</string>
+    <string name="zero">0.00</string>
+    <string name="pickMusicFile">Pick MP3</string>
 </resources>

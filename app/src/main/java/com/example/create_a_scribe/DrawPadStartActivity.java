@@ -91,9 +91,7 @@ public class DrawPadStartActivity extends AppCompatActivity {
                 break;
             }
         }
-        if(item.getItemId() == R.id.clearid){
-            drawView.clear();
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
