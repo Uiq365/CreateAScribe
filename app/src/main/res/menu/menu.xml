@@ -15,6 +15,11 @@
         android:icon="@drawable/save"
         android:title="@string/Save" />
     <item
+        android:id="@+id/resetid"
+        android:icon="@drawable/baseline_undo_black_24"
+        android:title="@string/Reset"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/linewidth"
         android:icon="@drawable/baseline_format_line_spacing_black_24"
         android:title="@string/lineWidth"

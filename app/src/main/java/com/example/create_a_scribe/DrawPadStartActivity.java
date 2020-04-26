@@ -37,7 +37,7 @@ public class DrawPadStartActivity extends AppCompatActivity {
     private SeekBar greenSeekBar;
     private SeekBar blueSeekBar;
 
-    //view holding the color seekBars
+    //view holding the color gotten from the combined seekBars
     private View colorView;
 
     @Override
@@ -84,6 +84,10 @@ public class DrawPadStartActivity extends AppCompatActivity {
             }
             case R.id.linewidth: {
                 showLineWidthDialog();
+                break;
+            }
+            case R.id.resetid:{
+                drawView.resetColor();
                 break;
             }
         }

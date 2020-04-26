@@ -30,4 +30,6 @@
     <string name="draw_pad_text">DrawPad</string>
     <string name="no_lyric_text">No Content</string>
     <string name="spitsomething">Sing ya Soul Song</string>
+    <string name="Reset">Reset Color</string>
+    <string name="voice_record">Save A FreeStyle</string>
 </resources>

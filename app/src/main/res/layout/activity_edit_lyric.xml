@@ -51,71 +51,60 @@
         android:layout_width="330dp"
         android:layout_height="36dp"
         android:layout_gravity="clip_vertical"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginLeft="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
         android:ems="10"
-        android:gravity="top"
+        android:gravity="center"
+
         android:hint="@string/spitsomething"
         android:inputType="textShortMessage"
         android:paddingStart="12dp"
-
         android:paddingTop="4dp"
         android:paddingEnd="12dp"
         android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/lyric_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lyric_title"
         tools:text="@tools:sample/lorem/random" />
 
     <EditText
         android:id="@+id/lyric_content"
-        android:layout_width="411dp"
+        android:layout_width="410dp"
         android:layout_height="456dp"
         android:layout_gravity="top"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="137dp"
         android:ems="10"
         android:gravity="center"
-        android:hint="@string/spitsomething"
 
+        android:hint="@string/spitsomething"
         android:inputType="textMultiLine"
         android:paddingStart="12dp"
         android:paddingTop="4dp"
         android:paddingEnd="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lyric_author"
         tools:text="@tools:sample/lorem/random" />
 
+    <LinearLayout
+        android:layout_width="411dp"
+        android:layout_height="134dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/lyric_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--<RelativeLayout-->
-
-<!--        <TableLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <TableRow-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal">-->
-
-<!--        </TableRow>-->
-
-<!--        <TableRow-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
-
-<!--        </TableRow>-->
-
-<!--        <TableRow-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
-
-<!--        </TableRow>-->
-
-<!--    </TableLayout>-->
-<!--</RelativeLayout>-->

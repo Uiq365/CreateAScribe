@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.create_a_scribe">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,9 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".DrawPadActivity"></activity>
-        <activity android:name=".DrawPadStartActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name=".DrawPadActivity"/>
+        <activity android:name=".DrawPadStartActivity" />
         <activity android:name=".EditNoteActivity" />
         <activity android:name=".EditLyricActivity" />
         <activity android:name=".SignInActivity" />

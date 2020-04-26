@@ -29,9 +29,10 @@ public class DrawView extends View {
     public static final float TOUCH_TOLERANCE = 10;
 
     private Bitmap bitmap;
-    private Canvas bitmaoCanvas;
+    private Canvas bitmapCanvas;
     private Paint paintScreen;
     private Paint paintLine;
+    private Paint prevPaintColor;
     private HashMap <Integer, Path> pathMap;
     private HashMap<Integer, Point> previousPointMap;
     public DrawView(Context context, @Nullable AttributeSet attrs) {
@@ -46,7 +47,9 @@ public class DrawView extends View {
 
         paintLine = new Paint();
         paintLine.setAntiAlias(true);
-        paintLine.setColor(Color.RED);
+        paintLine.setColor(Color.BLACK);
+        prevPaintColor = new Paint();
+        prevPaintColor.setColor(paintLine.getColor());
         paintLine.setStyle(Paint.Style.STROKE);
         paintLine.setStrokeWidth(30);
         paintLine.setStrokeCap(Paint.Cap.ROUND);
@@ -59,7 +62,7 @@ public class DrawView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 
         bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
-        bitmaoCanvas = new Canvas(bitmap);
+        bitmapCanvas = new Canvas(bitmap);
         bitmap.eraseColor(Color.WHITE);
     }
 
@@ -76,7 +79,7 @@ public class DrawView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        int action = event.getActionMasked();// Evemt type being revieved
+        int action = event.getActionMasked();// Event type being received
         int actionIndex= event.getActionIndex(); //pointer (finger, mouse...)
 
         if (action == MotionEvent.ACTION_DOWN ||
@@ -131,8 +134,14 @@ public class DrawView extends View {
     public void setDrawingColor(int color){//this method is used to change the paint color. It brings up a dialog which allows the user to pick the color
             paintLine.setColor(color);
     }
+    public void setPrevDrawingColor(int color){
+        prevPaintColor.setColor(color);
+    }
     public int getDrawingColor(){
         return paintLine.getColor();
+    }
+    public int getPrevDrawingColor(){
+        return prevPaintColor.getColor();
     }
     public void setLineWidth(int w){
         paintLine.setStrokeWidth(w);
@@ -151,10 +160,13 @@ public class DrawView extends View {
     public void setErase(){
         setDrawingColor(Color.WHITE);
     }
+    public void resetColor(){
+        setDrawingColor(prevPaintColor.getColor());
+    }
 
     private void touchEnded(int pointerId) {
         Path path = pathMap.get(pointerId);// get the corresponding path
-        bitmaoCanvas.drawPath(path, paintLine); //draw to bitMapCanvas
+        bitmapCanvas.drawPath(path, paintLine); //draw to bitMapCanvas
         path.reset();
     }
 
