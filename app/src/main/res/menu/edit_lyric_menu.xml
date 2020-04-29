@@ -7,7 +7,7 @@
         android:title="SAVE"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/pickMusicFile"
-        android:title="@string/pickMusicFile"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/pickMusicUrl"
+        android:title="@string/pickMusicUrl"
+        app:showAsAction="never" />
 </menu>

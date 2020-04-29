@@ -36,4 +36,7 @@
     <string name="voice_record">Save A FreeStyle</string>
     <string name="zero">0.00</string>
     <string name="pickMusicFile">Pick MP3</string>
+    <string name="pickMusicUrl">Pick Music Url</string>
+    <string name="pick_url">Pick Url</string>
+    <string name="url">Url</string>
 </resources>

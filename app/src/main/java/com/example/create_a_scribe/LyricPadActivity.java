@@ -1,10 +1,12 @@
 package com.example.create_a_scribe;
 
+import android.annotation.SuppressLint;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,10 +43,12 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.create_a_scribe.EditLyricActivity.LYRIC_EXTRA_Key;
+import static com.example.create_a_scribe.EditLyricActivity.MEDIA_EXTRA_Key;
 
 // This class is the main activity that makes the lyricPad work
 // This is used as a hub holding the navigation menu which contain buttons that point to the other activities.
@@ -55,6 +60,8 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
     private ArrayList<Lyric> lyrics;
     private LyricsAdapter adapter;
     private LyricsDao dao;
+    private Intent myFileIntent;
+    private Uri myUri;
     private MainLyricActionModeCallback actionModeCallback;
     private int checkedCount = 0;
     private FloatingActionButton fab;
@@ -221,7 +228,9 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
      * Start EditNoteActivity.class for Create New Note
      */
     private void onAddNewLyric() {
-        startActivity(new Intent(this, EditLyricActivity.class));
+
+        Intent intent = new Intent(this, EditLyricActivity.class);
+        startActivity(intent);
 
     }
 
@@ -240,19 +249,41 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.action_signIn) {
-            Intent intent=new Intent(LyricPadActivity.this,SignInActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.action_signOut) {
-            Intent intent=new Intent(LyricPadActivity.this,ProfileActivity.class);
-            startActivity(intent);
+        switch (item.getItemId()) {
+
+            case R.id.pickMusicFile: {
+                onDirectoryOpen();
+                break;
+            }
+            case R.id.voice_record:{
+                break;
+            }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onDirectoryOpen(){
+        myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        myFileIntent.setType("*/*");
+        startActivityForResult(myFileIntent, 10);
+
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode){
+
+            case 10:
+
+                if(resultCode == RESULT_OK){
+                    String path = data.getData().getPath();
+                    String path2 = getFilesDir().getAbsolutePath() + "" + path;
+                    myUri = Uri.fromFile(new File(path2));
+                }
+                break;
+        }
     }
 
 

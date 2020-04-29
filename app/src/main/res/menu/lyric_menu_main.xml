@@ -8,4 +8,9 @@
         android:title="@string/voice_record"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/pickMusicFile"
+        android:title="@string/pickMusicFile"
+        app:showAsAction="never" />
+
 </menu>

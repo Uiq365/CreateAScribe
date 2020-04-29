@@ -70,8 +70,8 @@
 
     <EditText
         android:id="@+id/lyric_content"
-        android:layout_width="411dp"
-        android:layout_height="418dp"
+        android:layout_width="410dp"
+        android:layout_height="421dp"
         android:layout_gravity="top"
         android:layout_marginTop="12dp"
         android:ems="10"
@@ -139,45 +139,44 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/pathView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="304dp"
-            android:layout_marginRight="304dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="410dp"
-            android:layout_height="148dp"
+            android:layout_width="248dp"
+            android:layout_height="93dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/playerSeekBar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <ImageView
                 android:id="@+id/imagePlayPause"
                 android:layout_width="57dp"
                 android:layout_height="48dp"
                 android:layout_margin="50dp"
-                android:layout_marginStart="304dp"
-                android:layout_marginLeft="304dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="177dp"
-                android:layout_marginRight="177dp"
-                android:layout_marginBottom="36dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="33dp"
+                android:layout_marginRight="33dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_play"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pathView"
+                android:layout_width="112dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Path"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.060000002" />
+                android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

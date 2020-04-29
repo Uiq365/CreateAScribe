@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -30,12 +31,17 @@ import java.io.File;
 import java.util.Date;
 
 public class EditLyricActivity extends AppCompatActivity {
+    private AlertDialog.Builder currAlertDialog;
+    private AlertDialog urlDialog;
     private ImageView imagePlayPause;
     private TextView textCurrentTime, textTotalDuration;
     private SeekBar playerSeekBar;
     private Uri myUri;
+    private String myUrl;
+    private EditText myMusicUrl;
     private TextView pathView;
     private MediaPlayer mediaPlayer;
+    private String myStringUri;
     private Intent myFileIntent;
     private Handler handler = new Handler();
     private EditText lyricTitle;
@@ -44,6 +50,7 @@ public class EditLyricActivity extends AppCompatActivity {
     private LyricsDao dao;
     private Lyric temp;
     public static final String LYRIC_EXTRA_Key = "lyric_id";
+    public static final String MEDIA_EXTRA_Key = "song_path";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +98,16 @@ public class EditLyricActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //myStringUri = " " + getIntent().getExtras().getInt(MEDIA_EXTRA_Key);
+
         prepareMediaPlayer();
     }
 
     private void prepareMediaPlayer(){
         try {
-            //mediaPlayer.setDataSource(getApplicationContext(), myUri);//plays music based on a Uri, internal address for a file
-            mediaPlayer = MediaPlayer.create(this, R.raw.jesus_walks);
+            mediaPlayer.setDataSource(myUrl);//plays music based on a Uri, internal address for a file
+            //mediaPlayer = MediaPlayer.create(this, R.raw.jesus_walks);
             mediaPlayer.prepare();
             textTotalDuration.setText(milliSecondsToTimer(mediaPlayer.getDuration()));
             Toast.makeText(this, "Playing your Beat!!", Toast.LENGTH_SHORT).show();
@@ -162,11 +172,44 @@ public class EditLyricActivity extends AppCompatActivity {
             }
             case R.id.pickMusicFile: {
                 onDirectoryOpen();
-                //prepareMediaPlayer();
+                prepareMediaPlayer();
+            }
+            case R.id.pickMusicUrl: {
+                onPickUrl();
             }
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void onPickUrl(){
+        showUrlDialog();
+    }
+
+    void showUrlDialog(){
+        currAlertDialog = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.url_dialog, null);
+
+        myMusicUrl = findViewById(R.id.myUrl);
+
+        Button setUrlButton = findViewById(R.id.setUrlButton);
+        setUrlButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                urlDialog.dismiss();
+            }
+
+        });
+
+        currAlertDialog.setView(view);
+        currAlertDialog.setTitle("Music Url");
+        urlDialog = currAlertDialog.create();
+        urlDialog.show();
+
+    }
+
 
     private void onDirectoryOpen(){
         myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -184,8 +227,10 @@ public class EditLyricActivity extends AppCompatActivity {
 
                 if(resultCode == RESULT_OK){
                     String path = data.getData().getPath();
-                    pathView.setText(Uri.parse(path).toString());
-                    myUri = Uri.fromFile(new File(path));
+                    String path2 = getFilesDir().getAbsolutePath() + "" + path;
+                    pathView.setText(myStringUri);
+                    pathView.setText(path2);
+                    //myUri = Uri.fromFile(new File(myStringUri));
                 }
                 break;
         }
