@@ -13,7 +13,9 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -57,10 +59,15 @@ import static com.example.create_a_scribe.EditLyricActivity.MEDIA_EXTRA_Key;
 public class LyricPadActivity extends AppCompatActivity implements LyricEventListener, Drawer.OnDrawerItemClickListener {
     private static final String TAG = "LyricPadActivity";
     private RecyclerView recyclerView;
+    private AlertDialog.Builder currAlertDialog;
+    private AlertDialog urlDialog;
+    private EditText myMusicUrl;
     private ArrayList<Lyric> lyrics;
     private LyricsAdapter adapter;
     private LyricsDao dao;
+    private Bundle extras;
     private Intent myFileIntent;
+    private String myUriString;
     private Uri myUri;
     private MainLyricActionModeCallback actionModeCallback;
     private int checkedCount = 0;
@@ -229,8 +236,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
      */
     private void onAddNewLyric() {
 
-        Intent intent = new Intent(this, EditLyricActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, EditLyricActivity.class));
 
     }
 
@@ -251,39 +257,14 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
 
-            case R.id.pickMusicFile: {
-                onDirectoryOpen();
-                break;
-            }
             case R.id.voice_record:{
+                Intent intent=new Intent(LyricPadActivity.this, VoiceRecordActivity.class);
+                startActivity(intent);
                 break;
             }
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void onDirectoryOpen(){
-        myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        myFileIntent.setType("*/*");
-        startActivityForResult(myFileIntent, 10);
-
-    }
-
-    @SuppressLint("MissingSuperCall")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode){
-
-            case 10:
-
-                if(resultCode == RESULT_OK){
-                    String path = data.getData().getPath();
-                    String path2 = getFilesDir().getAbsolutePath() + "" + path;
-                    myUri = Uri.fromFile(new File(path2));
-                }
-                break;
-        }
     }
 
 

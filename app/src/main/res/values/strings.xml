@@ -8,13 +8,6 @@
     <string name="delete_notes">Delete Notes</string>
     <string name="draw_something">Art washes away from the soul the dust of everyday life.</string>
     <string name="no_notes">No Notes !</string>
-    <string name="start_new">New</string>
-    <string name="brush">Brush</string>
-    <string name="save">Save</string>
-    <string name="paint">Paint</string>
-    <string name="sml">Small</string>
-    <string name="med">Medium</string>
-    <string name="lrg">Large</string>
     <string name="Color">color</string>
     <string name="Save">Save</string>
     <string name="lineWidth">Line Width</string>
@@ -28,15 +21,18 @@
     <string name="label_blue">Blue</string>
     <string name="set_color">Set Color</string>
     <string name="draw_pad_text">DrawPad</string>
-    <string name="no_lyric_text">No Content</string>
+    <string name="no_lyric_text">No Music Yet \n Write Something New!</string>
     <string name="whatsThisCalled">Whats the Song Called?</string>
     <string name="spitSomething">Let ya Soul Sing</string>
     <string name="whoAreYou">Who Are You</string>
     <string name="Reset">Reset Color</string>
-    <string name="voice_record">Save A FreeStyle</string>
+    <string name="voice_record">Spit A FreeStyle</string>
     <string name="zero">0.00</string>
     <string name="pickMusicFile">Pick MP3</string>
     <string name="pickMusicUrl">Pick Music Url</string>
     <string name="pick_url">Pick Url</string>
     <string name="url">Url</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

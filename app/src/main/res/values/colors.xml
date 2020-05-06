@@ -5,8 +5,11 @@
     <color name="colorAccent">#A9A9A9</color>
     <color name="view_back_color">#c7c7c7</color>
 
+    <color name="colorCoolGry">#9C9C9C</color>
+
 <!-- these are the colors for the dark theme-->
     <color name="colorPrimary_dark">#000000</color>
     <color name="colorAccent_dark">#FF0000</color>
     <color name="colorPrimaryDark_dark">#606060</color>
+
 </resources>

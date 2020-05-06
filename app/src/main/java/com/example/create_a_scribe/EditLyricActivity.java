@@ -31,18 +31,13 @@ import java.io.File;
 import java.util.Date;
 
 public class EditLyricActivity extends AppCompatActivity {
-    private AlertDialog.Builder currAlertDialog;
-    private AlertDialog urlDialog;
     private ImageView imagePlayPause;
     private TextView textCurrentTime, textTotalDuration;
     private SeekBar playerSeekBar;
-    private Uri myUri;
     private String myUrl;
-    private EditText myMusicUrl;
     private TextView pathView;
     private MediaPlayer mediaPlayer;
     private String myStringUri;
-    private Intent myFileIntent;
     private Handler handler = new Handler();
     private EditText lyricTitle;
     private EditText lyricAuthor;
@@ -75,85 +70,6 @@ public class EditLyricActivity extends AppCompatActivity {
             lyricContent.setText(temp.getLyricContent());
         } else lyricTitle.setFocusable(true);
 
-        imagePlayPause = findViewById(R.id.imagePlayPause);
-        textCurrentTime = findViewById(R.id.textCurrentTime);
-        textTotalDuration = findViewById(R.id.textTotalDuration);
-        playerSeekBar = findViewById(R.id.playerSeekBar);
-        pathView = findViewById(R.id.pathView);
-        mediaPlayer = new MediaPlayer();
-
-        playerSeekBar.setMax(100);
-
-        imagePlayPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mediaPlayer.isPlaying()){
-                    handler.removeCallbacks(updater);
-                    mediaPlayer.pause();
-                    imagePlayPause.setImageResource(R.drawable.ic_play);
-                }else{
-                    mediaPlayer.start();
-                    imagePlayPause.setImageResource(R.drawable.ic_pause);
-                    upDateSeekBar();
-                }
-            }
-        });
-
-        //myStringUri = " " + getIntent().getExtras().getInt(MEDIA_EXTRA_Key);
-
-        prepareMediaPlayer();
-    }
-
-    private void prepareMediaPlayer(){
-        try {
-            mediaPlayer.setDataSource(myUrl);//plays music based on a Uri, internal address for a file
-            //mediaPlayer = MediaPlayer.create(this, R.raw.jesus_walks);
-            mediaPlayer.prepare();
-            textTotalDuration.setText(milliSecondsToTimer(mediaPlayer.getDuration()));
-            Toast.makeText(this, "Playing your Beat!!", Toast.LENGTH_SHORT).show();
-        }catch (Exception exception){
-            Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private Runnable updater = new Runnable() {
-        @Override
-        public void run() {
-            upDateSeekBar();
-            long currentDuration = mediaPlayer.getCurrentPosition();
-            textCurrentTime.setText(milliSecondsToTimer(currentDuration));
-        }
-    };
-
-    private void upDateSeekBar(){
-        if(mediaPlayer.isPlaying()){
-            playerSeekBar.setProgress((int) (((float) mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration()) * 100));
-            handler.postDelayed(updater, 1000);
-        }
-    }
-
-    // a method used to convert the milliSeconds passed in as a parameter
-    // into a user friendly way by constructing them as readable strings
-    private String milliSecondsToTimer(long milliSeconds){
-        String timerString = "";
-        String secondsString;
-
-        int hours = (int) (milliSeconds / (1000 * 60 * 60));
-        int minutes = (int) (milliSeconds % (1000 * 60 * 60)) / (1000 * 60);
-        int seconds = (int) ((milliSeconds % (1000 * 60 * 60)) % (1000 * 60) / 1000);
-
-        if(hours > 0) {
-            timerString = hours + ":";
-        }
-        if(seconds < 10){
-            secondsString = "0" + seconds;
-        }else {
-            secondsString = "" + seconds;
-        }
-
-        timerString = timerString + minutes + ":" + secondsString;
-
-        return timerString;
     }
 
     @Override
@@ -170,71 +86,10 @@ public class EditLyricActivity extends AppCompatActivity {
             case R.id.save_lyric: {
                 onSaveLyric();
             }
-            case R.id.pickMusicFile: {
-                onDirectoryOpen();
-                prepareMediaPlayer();
-            }
-            case R.id.pickMusicUrl: {
-                onPickUrl();
-            }
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void onPickUrl(){
-        showUrlDialog();
-    }
-
-    void showUrlDialog(){
-        currAlertDialog = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.url_dialog, null);
-
-        myMusicUrl = findViewById(R.id.myUrl);
-
-        Button setUrlButton = findViewById(R.id.setUrlButton);
-        setUrlButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-
-                urlDialog.dismiss();
-            }
-
-        });
-
-        currAlertDialog.setView(view);
-        currAlertDialog.setTitle("Music Url");
-        urlDialog = currAlertDialog.create();
-        urlDialog.show();
-
-    }
-
-
-    private void onDirectoryOpen(){
-        myFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        myFileIntent.setType("*/*");
-        startActivityForResult(myFileIntent, 10);
-
-    }
-
-    @SuppressLint("MissingSuperCall")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode){
-
-            case 10:
-
-                if(resultCode == RESULT_OK){
-                    String path = data.getData().getPath();
-                    String path2 = getFilesDir().getAbsolutePath() + "" + path;
-                    pathView.setText(myStringUri);
-                    pathView.setText(path2);
-                    //myUri = Uri.fromFile(new File(myStringUri));
-                }
-                break;
-        }
-    }
 
     private void onSaveLyric() {
         // TODO: 20/06/2018 Save Lyric
