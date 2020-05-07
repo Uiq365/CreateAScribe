@@ -88,7 +88,6 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                     alertDialog.setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            stopRecording();
                             navController.navigate(R.id.action_recordFragment_to_audioListFragment);
                         }
                     });
@@ -145,9 +144,13 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        isRecording = true;
         mediaRecorder.start();
     }
 
+    // stops the recording and the timer.
+    // Stops the mediaRecorder, releases it and sets it to null.
+    // also sets is recording to false
     private void stopRecording() {
         timer.stop();
 
@@ -169,6 +172,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //when the activity is no longer being used, recording is stopped only after checking to see if any audio is being recorded
     @Override
     public void onStop() {
         super.onStop();
