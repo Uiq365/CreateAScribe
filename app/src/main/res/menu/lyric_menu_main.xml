@@ -4,8 +4,21 @@
     tools:context="com.example.notepad.MainActivity">
     <item
         android:id="@+id/voice_record"
+        android:icon="@drawable/mic"
         android:orderInCategory="100"
         android:title="@string/voice_record"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_signIn"
+        android:orderInCategory="100"
+        android:title="@string/action_signIn"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_signOut"
+        android:orderInCategory="100"
+        android:title="@string/action_signOut"
         app:showAsAction="never" />
 
 </menu>

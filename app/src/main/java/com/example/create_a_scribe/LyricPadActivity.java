@@ -262,6 +262,14 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
                 startActivity(intent);
                 break;
             }
+            case R.id.action_signIn: {
+                Intent intent = new Intent(LyricPadActivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+            case R.id.action_signOut: {
+                Intent intent = new Intent(LyricPadActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -348,7 +356,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         // TODO: 22/07/2018 do your logic here to share lyric on social or something else
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
-        String songText = lyric.getLyricTitle() + "\n by: "+ lyric.getLyricAuthor() + " \n" + lyric.getLyricContent() +
+        String songText = lyric.getLyricTitle() + "        \n by: "+ lyric.getLyricAuthor() + " \n" + lyric.getLyricContent() +
                 "\n\n Created on : " + NoteUtils.dateFromLong(lyric.getLyricDate()) + "\n  With :" +
                 getString(R.string.app_name);
         share.putExtra(Intent.EXTRA_TEXT, songText);

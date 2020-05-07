@@ -101,7 +101,7 @@ public class EditLyricActivity extends AppCompatActivity {
             title = content;
         }
         if(author.isEmpty())
-            author = "by: Unknown";
+            author = "Unknown";
 
         if (!title.isEmpty()) {
             long date = new Date().getTime(); // get  system time

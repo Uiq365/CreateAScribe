@@ -42,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
                 SignInActivity.mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        //On Successful signout we navigate the user back to LoginActivity
+                        //On Successful sign out we navigate the user back to LoginActivity
                         Intent intent=new Intent(ProfileActivity.this,MainActivity.class);
                         //intent.extra
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

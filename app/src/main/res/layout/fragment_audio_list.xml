@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/audio_list_view"
         android:layout_width="match_parent"
-        android:layout_height="662dp" />
+        android:layout_height="658dp" />
 <include layout = "@layout/player_sheet" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

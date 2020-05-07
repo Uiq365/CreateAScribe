@@ -4,10 +4,10 @@
     package="com.example.create_a_scribe">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +18,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="21">
-        <activity android:name=".DrawPadActivity"/>
-        <activity android:name=".VoiceRecordActivity"/>
+        <activity android:name=".DrawPadActivity" />
+        <activity android:name=".VoiceRecordActivity" />
         <activity android:name=".DrawPadStartActivity" />
         <activity android:name=".EditNoteActivity" />
         <activity android:name=".EditLyricActivity" />
