@@ -35,12 +35,21 @@ public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolde
 
     @NonNull
     @Override
-    //creates the actual view after inflating the note_layout file
+    //creates the actual view after inflating the lyric_layout file
     public LyricHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.lyric_layout, parent, false);
         return new LyricHolder(v);
     }
 
+
+    /**
+     * this method checks to see if the lyric exists
+     * if it does it checks to see if there is a title associated with it.
+     * if that is null the holder sets the text of the lyricText object to the lyricContent
+     * if it isnt null, it sets the title accordingly
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(LyricHolder holder, int position) {
         final Lyric lyric = getLyric(position);
@@ -54,7 +63,7 @@ public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolde
                 holder.lyricText.setText(lyric.getLyricContent());
                 holder.lyricDate.setText(NoteUtils.dateFromLong(lyric.getLyricDate()));
             }
-            // init note click event
+            // init lyric click event
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -62,7 +71,7 @@ public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolde
                 }
             });
 
-            // init note long click
+            // init lyric long click
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {

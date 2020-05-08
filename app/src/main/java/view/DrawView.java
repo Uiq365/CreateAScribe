@@ -1,5 +1,6 @@
 package view;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,6 +26,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 
+// this class is the one that makes the drawPad.
+// it creates a bitmap which holds the changes we might make using our paint
+// it also creates a canvas that translates and makes visible all of the changes from the bitmap
+// creates and initializes the different paint objects. PaintView as the paint we create, PaintLine as the brush and object we use to paint, and PrevPaintColor to easily revert back to the original paint color
 public class DrawView extends View {
     public static final float TOUCH_TOLERANCE = 10;
 
@@ -66,6 +71,8 @@ public class DrawView extends View {
         bitmap.eraseColor(Color.WHITE);
     }
 
+
+    //calculates the path that the user is drawing in with dots and connects them
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(bitmap,0,0,paintScreen);
@@ -76,6 +83,7 @@ public class DrawView extends View {
         }
     }
 
+    // checks to see when the user is actively touching the screen if so it gets the motion and draws based on that even. then redraws the screen after the user raises their finger
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -101,6 +109,7 @@ public class DrawView extends View {
         return true;
     }
 
+    //calculates the path of motion of the users input and places it
     private void touchMoved(MotionEvent event) {
 
         for (int i = 0; i < event.getPointerCount(); i++) {
@@ -190,6 +199,7 @@ public class DrawView extends View {
         point.y = (int) y;
     }
 
+    @SuppressLint("WrongThread")
     public void saveImage(){
         String filename = "CreatiPad" + System.currentTimeMillis();// used to save the file name as something uniquue everytime by using the current millisecondss
 
@@ -211,7 +221,7 @@ public class DrawView extends View {
             outputStream.flush();
             outputStream.close();
 
-            Toast message = Toast.makeText(getContext(), "Image Saved", Toast.LENGTH_LONG);
+            Toast message = Toast.makeText(getContext(), "Image Saved", Toast.LENGTH_LONG);//message confirming the image was saved
             message.setGravity(Gravity.CENTER, message.getXOffset() /2,
                     message.getYOffset() / 2);
             message.show();
@@ -219,14 +229,14 @@ public class DrawView extends View {
 
         } catch (FileNotFoundException e) {
 
-            Toast message = Toast.makeText(getContext(), "Image Not Saved", Toast.LENGTH_LONG);
+            Toast message = Toast.makeText(getContext(), "Image Not Saved", Toast.LENGTH_LONG);//message alerting the user that the image was not saves if the drawPad cannot find the image file
             message.setGravity(Gravity.CENTER, message.getXOffset() /2,
                     message.getYOffset() / 2);
             message.show();
 
         } catch (IOException e) {
 
-            Toast message = Toast.makeText(getContext(), "Image Not Saved", Toast.LENGTH_LONG);
+            Toast message = Toast.makeText(getContext(), "Image Not Saved", Toast.LENGTH_LONG);//message alerting the user that the image was not saved due to not being able to read or write the file into storage
             message.setGravity(Gravity.CENTER, message.getXOffset() /2,
                     message.getYOffset() / 2);
             message.show();

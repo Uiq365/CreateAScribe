@@ -67,6 +67,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // initializes the UI elements
         navController = Navigation.findNavController(view);
         listBtn = view.findViewById(R.id.record_list_button);
         recordBtn = view.findViewById(R.id.record_button);
@@ -82,7 +83,7 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         //check which button is pressed and do the task accordingly
         switch (v.getId()){
 
-            case R.id.record_list_button:
+            case R.id.record_list_button:// when the record list button is pressed an alert warning the ending of the recording is shown. only if the user is recording.
                 if(isRecording){
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                     alertDialog.setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
@@ -95,12 +96,12 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                     alertDialog.setTitle("Audio Still Recording");
                     alertDialog.setMessage("Are you sure you want to stop recording?");
                     alertDialog.create().show();
-                }else{
+                }else{//other wise, the use simply navigates to the other audioListFragment
                     navController.navigate(R.id.action_recordFragment_to_audioListFragment);
                 }
 
-            case R.id.record_button:
-                if (isRecording){
+            case R.id.record_button:// when the recording button is pressed
+                if (isRecording){// if the media recorder is currently recording it stops the recording and changes the button image
                     //Stop Recording
                     stopRecording();
 
@@ -110,9 +111,10 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
                 }
                 else{
                     //Start Recording
-                    if(checkPermisions()){
+                    if(checkPermisions()){// if there is no recording it checks to see if the user has given the app the permission to record. if yes then the recordin begins
                         startRecording();
 
+                        //change button image and set recording state to true
                         recordBtn.setImageDrawable(getResources().getDrawable(R.drawable.record_btn_stopped));//if permission granted by the user allows the record button to change
                         isRecording = true;
                     }
@@ -121,6 +123,10 @@ public class RecordFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //this starts the timer and creates a filepath for the recording.
+    //afterwards using a date formatter and a date object, the recordFile is set, the use of the date object is to reduce the chance of overwriting
+    //using that file name the text is set and the media recorder is created. the audio source is set as well as the output format, 3gp, the output file and the audio encoder.
+    //if there are no exceptions thrown the media recorder is prepared and started.
     private void startRecording() {
         timer.setBase(SystemClock.elapsedRealtime());
         timer.start();

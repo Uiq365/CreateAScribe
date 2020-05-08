@@ -53,11 +53,11 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void setDataOnView() {
-        GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
-        Picasso.get().load(googleSignInAccount.getPhotoUrl()).centerInside().fit().into(profileImage);
-        profileName.setText(googleSignInAccount.getDisplayName());
-        profileEmail.setText(googleSignInAccount.getEmail());
-    }
+    private void setDataOnView() {//this method was unused but it is supposed to get the google account information
+    GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
+    Picasso.get().load(googleSignInAccount.getPhotoUrl()).centerInside().fit().into(profileImage);
+    profileName.setText(googleSignInAccount.getDisplayName());
+    profileEmail.setText(googleSignInAccount.getEmail());
+}
 
 }

@@ -26,6 +26,7 @@ public class Note {
         this.noteDate = noteDate;
     }
 
+    // getter and setter methods for the noteText and noteDate
     public String getNoteText() {
         return noteText;
     }

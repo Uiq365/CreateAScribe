@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
-        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
         return false;
     }
 }

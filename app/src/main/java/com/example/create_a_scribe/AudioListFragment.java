@@ -28,6 +28,7 @@ import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
+ * this class holds a list of the AudioFiles, recordings, created by the user and allows the user to view them.
  */
 public class AudioListFragment extends Fragment implements AudioListAdapter.onItemListClick{
     private ConstraintLayout playerSheet;

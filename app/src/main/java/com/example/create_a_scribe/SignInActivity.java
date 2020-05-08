@@ -49,6 +49,8 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    // when the activity starts this checks to see if the same account that was logged in previously is trying to log in again
+    // if yes then it tells the user he is already logged in and sends them back to the mainActivity.
     @Override
     public void onStart() {
         super.onStart();
@@ -61,11 +63,12 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    // this activity activates when the activity has a result.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK)
+        if (resultCode == Activity.RESULT_OK)// if the result is okay it creates the GoogleSignInAccount and gets the result of the task namely if the sign in is successful or not.
             switch (requestCode) {
                 case 101:
                     try {
@@ -82,6 +85,7 @@ public class SignInActivity extends AppCompatActivity {
             }
     }
 
+    // when the log in is completed, it sends the user to the mainActivity with the google account information
     private void onLoggedIn(GoogleSignInAccount googleSignInAccount) {
 
         Intent intent = new Intent(this, MainActivity.class);

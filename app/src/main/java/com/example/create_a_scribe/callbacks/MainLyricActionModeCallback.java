@@ -6,6 +6,11 @@ import android.view.MenuItem;
 
 import com.example.create_a_scribe.R;
 
+/**
+ * This method is used when the lyrics are long pressed and it goes into a multiSelect mode.
+ * also works with the menu bar that appears and disappear on use of this class.
+ * the shareItem and countItem are checked and if pressed the action is called
+ */
 public abstract class MainLyricActionModeCallback implements ActionMode.Callback {
     private ActionMode action;
     private MenuItem countItem;

@@ -3,6 +3,8 @@ package com.example.create_a_scribe;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+// This class is used to format the time that has passed.
+// This class is used by the AudioListFragment which has the view of the audioList.
 public class TimeAgo {
 
     public String getTimeAgo(long durr){

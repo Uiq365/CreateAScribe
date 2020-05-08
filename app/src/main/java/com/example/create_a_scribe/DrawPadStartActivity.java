@@ -64,7 +64,7 @@ public class DrawPadStartActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected( MenuItem item) {//This gets the value of the item id, the item we are touching
-                                                                    // and compares it to the id value of the various buttons and based on the result will call certain helper funcitons.
+                                                            // and compares it to the id value of the various buttons and based on the result will call certain helper functions.
         switch (item.getItemId()){
 
             case R.id.clearid: {
@@ -97,6 +97,7 @@ public class DrawPadStartActivity extends AppCompatActivity {
 
 
 
+    // this method creates and shows the color dialog pop up that allows you to change the color of the paint line
     void showColorDialog(){
         currAlertDialog = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.color_dialog, null);
@@ -171,6 +172,8 @@ public class DrawPadStartActivity extends AppCompatActivity {
         dialogLineWidth.show();
     }
 
+    //tracks the chane in seekBar of the RGB values combines them and shows you a preview in the colorView
+    // in addition it changes the color of the drawView which then becomes the color of the paintLine
     private SeekBar.OnSeekBarChangeListener colorSeekBarChanged = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -203,10 +206,12 @@ public class DrawPadStartActivity extends AppCompatActivity {
         }
     };
 
+    //changes the width of the line depending on how much the seekBar was changes
     private  SeekBar.OnSeekBarChangeListener widthSeekBarChange = new SeekBar.OnSeekBarChangeListener() {
         Bitmap bitmap = Bitmap.createBitmap(400, 100, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
 
+        // tracks the progress of the seekBar and set the width to change appropriately also shows a preview in the widthImageView
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             Paint p = new Paint();

@@ -30,6 +30,8 @@ import com.example.create_a_scribe.model.Lyric;
 import java.io.File;
 import java.util.Date;
 
+//this is the activity that brings you to the edit lyric screen.
+// it also allows for the saving of lyrics when the button id is detected.
 public class EditLyricActivity extends AppCompatActivity {
     private ImageView imagePlayPause;
     private TextView textCurrentTime, textTotalDuration;
@@ -47,6 +49,10 @@ public class EditLyricActivity extends AppCompatActivity {
     public static final String LYRIC_EXTRA_Key = "lyric_id";
     public static final String MEDIA_EXTRA_Key = "song_path";
 
+
+    //on create the activity sets up the theme based on the shared preferences and sets the view and the inputLyric button
+    //it also gets the lyrics from the database and if there is any extra passed by the intent it will populate the lyric edit screen with the previous information
+    //it sets the different textViews for the different field inputs
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // set theme
@@ -108,13 +114,13 @@ public class EditLyricActivity extends AppCompatActivity {
             // if  exist update else create new
             if (temp == null) {
                 temp = new Lyric(title, author, content, date);
-                dao.insertLyric(temp); // create new note and inserted to database
+                dao.insertLyric(temp); // create new lyric and inserted to database
             } else {
                 temp.setLyricTitle(title);
                 temp.setLyricAuthor(author);
                 temp.setLyricContent(content);
                 temp.setLyricDate(date);
-                dao.updateLyric(temp); // change text and date and update note on database
+                dao.updateLyric(temp); // change title, author, lyric content and date and updates the lyric on a database
             }
             }
 

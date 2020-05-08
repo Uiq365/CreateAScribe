@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class VoiceRecordActivity extends AppCompatActivity {
 
+    // This is an activity used simply to host and start the voice recorder activity.
+    // This is the activity seen in the android manifest and that is referenced from the LyricPadActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

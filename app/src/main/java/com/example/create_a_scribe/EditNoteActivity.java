@@ -16,12 +16,16 @@ import com.example.create_a_scribe.model.Note;
 
 import java.util.Date;
 
+//this is the activity that brings you to the edit note screen.
+// it also allows for the saving of notes when the button id is detected.
 public class EditNoteActivity extends AppCompatActivity {
     private EditText inputNote;
     private NotesDao dao;
     private Note temp;
     public static final String NOTE_EXTRA_Key = "note_id";
 
+    //on create the activity sets up the theme based on the shared preferences and sets the view and the inputNote button
+    //it also gets the notes from the database and if there is any extra passed by the intent it will populate the note edit screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

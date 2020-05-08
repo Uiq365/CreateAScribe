@@ -11,6 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
 
+/**
+ * This class above all else makes a clean way of showing the different recording files
+ * it helps the audioList Fragment show all the recordings in a nice recycler view.
+ * To do this it creates a single list item for each of the different recordings
+ * the single list item has a static listImage,
+ * a listTitle which is used to display the file name
+ * and a listDate to keep track of when the recording was created, this information is used at the time of creating the recording
+ */
 public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.AudioViewHolder> {
 
     private File[] allRecordings;

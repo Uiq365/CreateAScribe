@@ -203,6 +203,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
 
     }
 
+    //this is a helper method used to load lyrics from the database using the Dao interfaces
     private void loadLyrics() {
         this.lyrics = new ArrayList<>();
         List<Lyric> list = dao.getLyrics();// get All lyrics from DataBase
@@ -293,6 +294,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
 
     }
 
+    //this method reveals the feature to multi delete lyrics and share.
     @Override
     public void onLyricLongClick(Lyric lyric) {
         // TODO: 22/07/2018 lyric long clicked : delete , share ..
@@ -349,6 +351,8 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         actionModeCallback.setCount(checkedCount + "/" + lyrics.size());
     }
 
+    //this method sets the format that the lyric will be shared with.
+    //Can be shared through text, email, and can be uploaded to a google drive account by using the sign in feature.
     private void onShareLyric() {
         // TODO: 22/07/2018  we need share just one Lyric not multiple
 
@@ -378,7 +382,6 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
             Toast.makeText(this, checkedLyrics.size() + " Lyric(s) Delete successfully !", Toast.LENGTH_SHORT).show();
         } else Toast.makeText(this, "No Lyric(s) selected", Toast.LENGTH_SHORT).show();
 
-        //adapter.setMultiCheckMode(false);
     }
 
     @Override
@@ -445,7 +448,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
-        Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
         return false;
     }
 }
