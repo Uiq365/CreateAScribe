@@ -33,7 +33,7 @@ import com.example.create_a_scribe.callbacks.MainLyricActionModeCallback;
 import com.example.create_a_scribe.db.LyricsDB;
 import com.example.create_a_scribe.db.LyricsDao;
 import com.example.create_a_scribe.model.Lyric;
-import com.example.create_a_scribe.utils.NoteUtils;
+import com.example.create_a_scribe.utils.LyricUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -59,16 +59,9 @@ import static com.example.create_a_scribe.EditLyricActivity.MEDIA_EXTRA_Key;
 public class LyricPadActivity extends AppCompatActivity implements LyricEventListener, Drawer.OnDrawerItemClickListener {
     private static final String TAG = "LyricPadActivity";
     private RecyclerView recyclerView;
-    private AlertDialog.Builder currAlertDialog;
-    private AlertDialog urlDialog;
-    private EditText myMusicUrl;
     private ArrayList<Lyric> lyrics;
     private LyricsAdapter adapter;
     private LyricsDao dao;
-    private Bundle extras;
-    private Intent myFileIntent;
-    private String myUriString;
-    private Uri myUri;
     private MainLyricActionModeCallback actionModeCallback;
     private int checkedCount = 0;
     private FloatingActionButton fab;
@@ -98,7 +91,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 13/05/2018  add new note
+                // TODO: 13/05/2018  add new lyric
                 onAddNewLyric();
             }
         });
@@ -233,7 +226,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
     }
 
     /**
-     * Start EditNoteActivity.class for Create New Note
+     * Start EditLyricActivity.class for Create New Lyric
      */
     private void onAddNewLyric() {
 
@@ -278,14 +271,14 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
 
 
     @Override
-    //when clicking an old note, it loads the current lyrics
+    //when clicking an old lyric, it loads the current lyrics
     protected void onResume() {
         super.onResume();
         loadLyrics();
     }
 
     @Override
-    //when an old note was clicked, it sends you to the EditNoteActivity so you can then edit the note
+    //when an old lyric was clicked, it sends you to the EditLyricActivity so you can then edit the lyric
     public void onLyricClick(Lyric lyric) {
         // TODO: 22/07/2018  lyric clicked : edit lyric
         Intent edit = new Intent(this, EditLyricActivity.class);
@@ -361,7 +354,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         String songText = lyric.getLyricTitle() + "        \n by: "+ lyric.getLyricAuthor() + " \n" + lyric.getLyricContent() +
-                "\n\n Created on : " + NoteUtils.dateFromLong(lyric.getLyricDate()) + "\n  With :" +
+                "\n\n Created on : " + LyricUtils.dateFromLong(lyric.getLyricDate()) + "\n  With :" +
                 getString(R.string.app_name);
         share.putExtra(Intent.EXTRA_TEXT, songText);
         startActivity(share);
@@ -403,7 +396,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
 
                 @Override
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                    // TODO: 28/09/2018 delete note when swipe
+                    // TODO: 28/09/2018 delete lyric when swipe
 
                     if (lyrics != null) {
                         // get swiped lyric
@@ -419,11 +412,11 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
 
     private void swipeToDelete(final Lyric swipedLyric, final RecyclerView.ViewHolder viewHolder) {
         new AlertDialog.Builder(LyricPadActivity.this)
-                .setMessage("Delete Note?")
+                .setMessage("Delete Lyric?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // TODO: 28/09/2018 delete note
+                        // TODO: 28/09/2018 delete lyric
                         dao.deleteLyric(swipedLyric);
                         lyrics.remove(swipedLyric);
                         adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
@@ -434,7 +427,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // TODO: 28/09/2018  Undo swipe and restore swipedNote
+                        // TODO: 28/09/2018  Undo swipe and restore swipedLyric
                         recyclerView.getAdapter().notifyItemChanged(viewHolder.getAdapterPosition());
 
 

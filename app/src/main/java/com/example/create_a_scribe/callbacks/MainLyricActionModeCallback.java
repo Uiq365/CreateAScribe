@@ -20,7 +20,7 @@ public abstract class MainLyricActionModeCallback implements ActionMode.Callback
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
         actionMode.getMenuInflater().inflate(R.menu.main__lyric_action_mode, menu);
         this.action = actionMode;
-        this.countItem = menu.findItem(R.id.action_checked_count);
+        this.countItem = menu.findItem(R.id.action_lyric_checked_count);
         this.shareItem = menu.findItem(R.id.action_share_lyric);
         return true;
     }
