@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 //This class writes the notes to the screen. What it does is makes sure the view shows the different notes saved in a custom format
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> implements Filterable{
+    private ArrayList<Note> notesFull;
     private Context context;
     private ArrayList<Note> notes;
     private NoteEventListener listener;
@@ -29,6 +32,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
     public NotesAdapter(Context context, ArrayList<Note> notes) {
         this.context = context;
         this.notes = notes;
+        notesFull = new ArrayList<Note>(notes);
     }
 
 
@@ -124,4 +128,38 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteHolder> 
             }
         notifyDataSetChanged();
     }
+
+    @Override
+    public Filter getFilter() {
+        return noteFilter;
+    }
+
+    private Filter noteFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Note> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(notesFull);
+            } else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Note note : notesFull){
+                    if(note.getNoteText().toLowerCase().contains(filterPattern)){
+                        filteredList.add(note);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            notes.clear();
+            notes.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

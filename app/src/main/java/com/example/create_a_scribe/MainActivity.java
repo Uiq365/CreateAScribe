@@ -12,6 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
         setContentView(R.layout.activity_main);//sets the layout to the view
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         setupNavigation(savedInstanceState, toolbar);
         // init recyclerView
@@ -239,7 +241,26 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        // adds the search bar and sets up the searchView.
+        // by using the filter method in the NotesAdapter Class
+        // the adapter which already shows the notes will be filtered based on the search text.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.search_icon);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Here");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return true;
     }
 
@@ -250,19 +271,20 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.action_signIn) {
-            Intent intent=new Intent(MainActivity.this,SignInActivity.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.action_signOut) {
-            Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
-            startActivity(intent);
-        }
+        switch (item.getItemId()){
+            case R.id.action_settings: {
+                return true;
+            }
+            case R.id.action_signIn: {
+                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+            case R.id.action_signOut: {
+                Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
+                startActivity(intent);
+            }
 
+        }
         return super.onOptionsItemSelected(item);
     }
 
