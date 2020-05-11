@@ -241,7 +241,7 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
         // adds the search bar and sets up the searchView.
         // by using the filter method in the NotesAdapter Class
         // the adapter which already shows the notes will be filtered based on the search text.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.lyric_menu_main, menu);
         MenuItem menuItem = menu.findItem(R.id.search_icon);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setQueryHint("Search Here");
