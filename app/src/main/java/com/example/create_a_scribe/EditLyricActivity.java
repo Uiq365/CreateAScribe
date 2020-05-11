@@ -115,16 +115,23 @@ public class EditLyricActivity extends AppCompatActivity {
             if (temp == null) {
                 temp = new Lyric(title, author, content, date);
                 dao.insertLyric(temp); // create new lyric and inserted to database
+                Toast.makeText(this, "Lyric Saved", Toast.LENGTH_SHORT).show();
             } else {
                 temp.setLyricTitle(title);
                 temp.setLyricAuthor(author);
                 temp.setLyricContent(content);
                 temp.setLyricDate(date);
                 dao.updateLyric(temp); // change title, author, lyric content and date and updates the lyric on a database
+                Toast.makeText(this, "Lyric Saved", Toast.LENGTH_SHORT).show();
             }
             }
 
             finish(); // return to the MainActivity
         }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveLyric();
     }
+}

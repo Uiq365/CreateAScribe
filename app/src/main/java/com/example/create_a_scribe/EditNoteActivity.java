@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -71,14 +72,22 @@ public class EditNoteActivity extends AppCompatActivity {
             if (temp == null) {
                 temp = new Note(text, date);
                 dao.insertNote(temp); // create new note and inserted to database
+                Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show();
             } else {
                 temp.setNoteText(text);
                 temp.setNoteDate(date);
                 dao.updateNote(temp); // change text and date and update note on database
+                Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show();
             }
 
             finish(); // return to the MainActivity
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onSaveNote();
     }
 }
