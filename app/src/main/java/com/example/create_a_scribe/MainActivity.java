@@ -278,10 +278,12 @@ public class MainActivity extends AppCompatActivity implements NoteEventListener
             case R.id.action_signIn: {
                 Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.action_signOut: {
                 Intent intent=new Intent(MainActivity.this,ProfileActivity.class);
                 startActivity(intent);
+                break;
             }
 
         }

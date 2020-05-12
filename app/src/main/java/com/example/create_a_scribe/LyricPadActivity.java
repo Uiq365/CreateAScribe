@@ -279,10 +279,12 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
             case R.id.action_signIn: {
                 Intent intent = new Intent(LyricPadActivity.this, SignInActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.action_signOut: {
                 Intent intent = new Intent(LyricPadActivity.this, ProfileActivity.class);
                 startActivity(intent);
+                break;
             }
         }
 
