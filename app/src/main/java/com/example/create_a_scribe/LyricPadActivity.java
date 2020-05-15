@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -237,7 +238,26 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        // adds the search bar and sets up the searchView.
+        // by using the filter method in the NotesAdapter Class
+        // the adapter which already shows the notes will be filtered based on the search text.
         getMenuInflater().inflate(R.menu.lyric_menu_main, menu);
+        MenuItem menuItem = menu.findItem(R.id.search_icon);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Here");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return true;
     }
 
@@ -259,10 +279,12 @@ public class LyricPadActivity extends AppCompatActivity implements LyricEventLis
             case R.id.action_signIn: {
                 Intent intent = new Intent(LyricPadActivity.this, SignInActivity.class);
                 startActivity(intent);
+                break;
             }
             case R.id.action_signOut: {
                 Intent intent = new Intent(LyricPadActivity.this, ProfileActivity.class);
                 startActivity(intent);
+                break;
             }
         }
 

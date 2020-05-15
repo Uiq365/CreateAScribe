@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 //This class writes the lyrics to the screen. What it does is makes sure the view shows the different lyrics saved in a custom format
-public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolder> {
+public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolder> implements Filterable {
+    private ArrayList<Lyric> lyricsFull;
     private Context context;
     private ArrayList<Lyric> lyrics;
     private LyricEventListener listener;
@@ -30,6 +33,7 @@ public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolde
     public LyricsAdapter(Context context, ArrayList<Lyric> lyrics) {
         this.context = context;
         this.lyrics = lyrics;
+        lyricsFull = new ArrayList<Lyric>(lyrics);
     }
 
 
@@ -141,4 +145,38 @@ public class LyricsAdapter extends RecyclerView.Adapter<LyricsAdapter.LyricHolde
             }
         notifyDataSetChanged();
     }
+
+    @Override
+    public Filter getFilter() {
+        return lyricFilter;
+    }
+
+    private Filter lyricFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Lyric> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(lyricsFull);
+            } else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Lyric lyric : lyricsFull){
+                    if(lyric.getLyricTitle().toLowerCase().contains(filterPattern) || (lyric.getLyricContent().toLowerCase().contains(filterPattern))){
+                        filteredList.add(lyric);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            lyrics.clear();
+            lyrics.addAll((ArrayList)results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
